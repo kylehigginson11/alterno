@@ -113,9 +113,9 @@
         <div class="row">
             {% for product in products %}
                 <div class="col-sm-3 col-6">
-                    <a class="recent-a"><img src="{{ product.image.url }}" class="img-responsive"></a>
+                    <a class="recent-a" href="/product/{{ product.id }}"><img src="{{ product.image.url }}" class="img-responsive"></a>
                     <p>{{ product.name }}</p>
-                    <button class="btn btn-recent" href="/product/{{ product.id }}">View Alternatives!</button>
+                    <button type="button" class="btn btn-recent" onclick="window.location.href='/product/{{ product.id }}'">View Alternatives!</button>
                 </div>
             {% endfor %}
         </div>
