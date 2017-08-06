@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/productdetail.css' %}"/>
+
+    <section id="main-product-section">
+        <div class="container">
+            <div class="row">
+                <div class="">
+                    <p>{{ product.name }}</p>
+                    <a><img src="{{ product.image.url }}"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    </script>
+{% endblock %}

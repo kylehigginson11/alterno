@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}"/>
+
+    <section id="land-section">
+        <div class="container">
+            <div class="row">
+                <div class="index-land-div">
+                    <h3 class="white-font land-div-header">Find Alternatives to the market leader</h3>
+                    <div class="wrap">
+                        <form class="search">
+                            <input type="text" class="searchTerm" placeholder="Whats the Alternative to ...">
+                            <button type="submit" class="searchButton">
+                                Search
+                            </button>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="{% static 'img/mag-glass.png' %}" class="img-responsive land-icon-left">
+                        </div>
+                        <div class="col-4">
+                            <img src="{% static 'img/recommend.png' %}" class="img-responsive land-icon-center">
+                        </div>
+                        <div class="col-4">
+                            <img src="{% static 'img/tag.png' %}" class="img-responsive land-icon-right">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cat-button-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2 cat-button black-font">
+                    <button>Software</button>
+                </div>
+                <div class="col-sm-2 cat-button black-font">
+                    <button>Technology</button>
+                </div>
+                <div class="col-sm-2 cat-button black-font">
+                    <button>Food</button>
+                </div>
+                <div class="col-sm-2 cat-button black-font">
+                    <button>Home</button>
+                </div>
+                <div class="col-sm-2 cat-button black-font">
+                    <button>Websites</button>
+                </div>
+                <div class="col-sm-2 cat-button black-font">
+                    <button>Other</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container land-process-div">
+        <div class="row">
+            <div class="col-sm-5 process-one">
+                <p class="align-middle">Search for the 'Big Brand Product'</p>
+            </div>
+            <div class="col-sm-2">
+                <img src="{% static 'img/arrow.png' %}" class="process-arrow img-responsive mx-auto">
+            </div>
+            <div class="col-sm-5 process-two align-middle">
+                <p class="align-middle">Find Alternatives with Equal Quality, at a Better Price</p>
+            </div>
+        </div>
+        <div class="row process-icon-div">
+            <div class="col-sm-2">
+                <img src="{% static 'img/smart-tv.png' %}" class="img-responsive">
+            </div>
+            <div class="col-sm-2">
+                <img src="{% static 'img/cosmetics.png' %}" class="img-responsive">
+            </div>
+            <div class="col-sm-2">
+                <img src="{% static 'img/cutlery.png' %}" class="img-responsive">
+            </div>
+            <div class="col-sm-2">
+                <img src="{% static 'img/lawn-mower.png' %}" class="img-responsive">
+            </div>
+            <div class="col-sm-2">
+                <img src="{% static 'img/blender.png' %}" class="img-responsive">
+            </div>
+            <div class="col-sm-2">
+                <img src="{% static 'img/treadmill.png' %}" class="img-responsive">
+            </div>
+        </div>
+    </div>
+
+    <div class="container news-div">
+        <div class="row">
+            <div class="col-sm-3">
+                <h3>News</h3>
+            </div>
+            <div class="col-sm-3 col-6">
+                <p>sample</p>
+            </div>
+            <div class="col-sm-3 col-6">
+                <p>sample</p>
+            </div>
+            <div class="col-sm-3 hide-576">
+                <p>sample</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container recent-div">
+        <h3>Recent Uploads</h3>
+        <div class="row">
+            {% for product in products %}
+                <div class="col-sm-3 col-6">
+                    <a class="recent-a"><img src="{{ product.image.url }}" class="img-responsive"></a>
+                    <p>{{ product.name }}</p>
+                    <button class="btn btn-recent" href="/product/{{ product.id }}">View Alternatives!</button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <section id="mailing-list">
+        <div class="container">
+            <div class="row">
+                <div class="mailing-div">
+                    <p>Join Our Mailing List</p>
+                    <p>Stay up to date with the latest deals and better alternatives</p>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Email Address">
+                        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
