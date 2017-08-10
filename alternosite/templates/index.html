@@ -10,7 +10,8 @@
                     <h3 class="white-font land-div-header">Find Alternatives to the market leader</h3>
                     <div class="wrap">
                         <form class="search">
-                            <input type="text" class="searchTerm" placeholder="Whats the Alternative to ...">
+                            <input id="product_search" type="text" class="searchTerm"
+                                   placeholder="Whats the Alternative to ...">
                             <button type="submit" class="searchButton">
                                 Search
                             </button>
@@ -36,7 +37,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-2 cat-button black-font">
-                    <button>Software</button>
+                    <div class="dropdown cat-button black-font">
+                        <button class="btn" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Software
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            {% for cat in software_subs %}
+                                <button class="dropdown-item" type="button">{{ cat.name }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-2 cat-button black-font">
                     <button>Technology</button>
@@ -113,9 +124,12 @@
         <div class="row">
             {% for product in products %}
                 <div class="col-sm-3 col-6">
-                    <a class="recent-a" href="/product/{{ product.id }}"><img src="{{ product.image.url }}" class="img-responsive"></a>
+                    <a class="recent-a" href="/product/{{ product.id }}"><img src="{{ product.image.url }}"
+                                                                              class="img-responsive"></a>
                     <p>{{ product.name }}</p>
-                    <button type="button" class="btn btn-recent" onclick="window.location.href='/product/{{ product.id }}'">View Alternatives!</button>
+                    <button type="button" class="btn btn-recent"
+                            onclick="window.location.href='/product/{{ product.id }}'">View Alternatives!
+                    </button>
                 </div>
             {% endfor %}
         </div>
@@ -135,5 +149,31 @@
             </div>
         </div>
     </section>
+
+    <script>
+
+        $(function () {
+            $("#product_search").autocomplete({
+                minLength: 2,
+                source: 'api/product_list',
+                focus: function (event, ui) {
+                    $("#product_search").val(ui.item.name);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#product_search").val(ui.item.name);
+                    window.location.href = '/product/' + ui.item.id;
+                    return false;
+                }
+            })
+
+                .data("ui-autocomplete")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<a>" + item.name + "</a>")
+                    .appendTo(ul);
+            };
+        });
+
+    </script>
 
 {% endblock %}

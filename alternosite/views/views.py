@@ -1,5 +1,7 @@
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Count
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.models import User
@@ -9,14 +11,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import authentication, permissions
 
-
-from alternosite.models import Product
-from alternosite.serializers import RecentUploadSerializer
+# alternosite imports
+from alternosite.models import Product, SubCategory, Category
+from alternosite.serializers import ProductListSerializer
 
 
 def index(request):
     products = Product.objects.filter(approved=True, removed=False).order_by("-id")[:4]
-    return render(request, 'index.html', {'products': products})
+    software = Category.objects.get(name='Software')
+    software_subs = SubCategory.objects.filter(category=software)
+    return render(request, 'index.html', {'products': products, 'software_subs': software_subs})
 
 
 def loginuser(request):
@@ -26,7 +30,7 @@ def loginuser(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect("/")
+            return redirect('index')
         else:
             return render(request, 'registration/login.html')
     else:
@@ -46,11 +50,11 @@ def registeruser(request):
             context = {
                 "error": "This username already exists",
             }
-            return render(request, 'register.html',  context)
+            return render(request, 'register.html', context)
         else:
             user = User.objects.create_user(username=username, password=password)
             login(request, user)
-            return HttpResponseRedirect("/")
+            return redirect('index')
     else:
         return render(request, 'register.html')
 
@@ -58,7 +62,21 @@ def registeruser(request):
 def detailProduct(request, **kwargs):
     product_id = kwargs['id']
     product = Product.objects.get(id=product_id)
-    return render(request, 'productdetail.html', {'product': product})
+    product_line = Product.objects.filter(product_line=product.product_line).exclude(id=product.id)
+    product_line = product_line.annotate(consumption_times=Count('likes')) \
+        .order_by('-consumption_times')
+    return render(request, 'productdetail.html', {'main_product': product, 'product_line': product_line})
+
+
+@login_required()
+def account(request, **kwargs):
+    user = request.user
+    product_likes = Product.objects.filter(likes=user)
+    added = Product.objects.filter(user=user)
+    context = {'user': user,
+               'liked_products': product_likes,
+               'added': added}
+    return render(request, 'account.html', context)
 
 
 class ProductLikeAPIToggle(APIView):
@@ -105,3 +123,17 @@ class CommentLikeAPIToggle(APIView):
             "liked": liked
         }
         return Response(data)
+
+
+class ProductAutocompleteList(APIView):
+    """
+    List of products that contain the 'term' passed in as a GET.
+    """
+
+    def get(self, request, **kwargs):
+        q = request.GET.get('term', '')
+        products = Product.objects.filter(Q(name__icontains=q))
+
+        serializer = ProductListSerializer(products, many=True)
+
+        return Response(serializer.data)

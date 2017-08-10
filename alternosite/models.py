@@ -59,7 +59,7 @@ class Product(models.Model):
     removed = models.BooleanField(default=False)
 
     def get_api_like_url(self):
-        return reverse("posts:like-api-toggle", kwargs={"product": self.id})
+        return reverse("like-api-toggle", kwargs={"product": self.id})
 
     def remove(self):
         self.removed = True

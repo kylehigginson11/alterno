@@ -6,14 +6,145 @@
     <section id="main-product-section">
         <div class="container">
             <div class="row">
-                <div class="">
-                    <p>{{ product.name }}</p>
-                    <a><img src="{{ product.image.url }}"></a>
+                <div class="col-md-12 main-prod-name">
+                    <h3>{{ main_product.name }}</h3>
+                </div>
+                <div class="col-md-4 main-product-img">
+                    <a class=""><img src="{{ main_product.image.url }}" class="img-responsive"></a>
+                </div>
+                <div class="col-md-8">
+                    <p class="more">{{ main_product.description }}</p>
+                </div>
+                <div class="row main-product-details">
+                    <div class="col-md-4 col">
+                        <p>£{{ main_product.price }}</p>
+                    </div>
+                    <div class="col-md-4 col">
+                        <button type="button" class="like-button like-btn"
+                                data-href='{{ main_product.get_api_like_url }}'
+                                data-likes='{{ main_product.likes.count }}' href='{{ main_product.get_like_url }}'>LIKE
+                            | {{ main_product.likes.count }}</button>
+                    </div>
+                    <div class="col-md-4 col">
+                        <button type="button" class="btn btn-success" value="more-info"
+                                onclick="window.open('{{ main_product.web_link }}')">More Info
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <section id="alternatives-section">
+        <div class="container">
+            {% for alternative in product_line %}
+                <div class="row alternative-div">
+                    <div class="col-md-12 main-prod-name">
+                        <h3>{{ alternative.name }}</h3>
+                    </div>
+                    <div class="col-md-4 main-product-img">
+                        <a class="" href="/product/{{ alternative.id }}"><img src="{{ alternative.image.url }}"
+                                                                              class="img-responsive"></a>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="more">{{ alternative.description }}</p>
+                    </div>
+                    <div class="row main-product-details">
+                        <div class="col-md-4 col">
+                            <p>£{{ alternative.price }}</p>
+                        </div>
+                        <div class="col-md-4 col">
+                            <button type="button" class="like-button like-btn"
+                                    data-href='{{ alternative.get_api_like_url }}'
+                                    data-likes='{{ alternative.likes.count }}' href='{{ alternative.get_like_url }}'>
+                                LIKE | {{ alternative.likes.count }}</button>
+                        </div>
+                        <div class="col-md-4 col">
+                            <button type="button" class="btn btn-success" value="more-info"
+                                    onclick="window.open('{{ alternative.web_link }}')">More Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
     <script>
+
+        $(document).ready(function () {
+            var showChar = 400;
+            var ellipsestext = "...";
+            var moretext = "more";
+            var lesstext = "less";
+            $('.more').each(function () {
+                var content = $(this).html();
+
+                if (content.length > showChar) {
+
+                    var c = content.substr(0, showChar);
+                    var h = content.substr(showChar - 1, content.length - showChar);
+
+                    var html = c + '<span class="moreelipses">' + ellipsestext + '</span>&nbsp;<span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+                    $(this).html(html);
+                }
+
+            });
+
+            $(".morelink").click(function () {
+                if ($(this).hasClass("less")) {
+                    $(this).removeClass("less");
+                    $(this).html(moretext);
+                } else {
+                    $(this).addClass("less");
+                    $(this).html(lesstext);
+                }
+                $(this).parent().prev().toggle();
+                $(this).prev().toggle();
+                return false;
+            });
+        });
+
+        $(document).ready(function () {
+            function updateText(btn, newCount, verb) {
+                btn.text(verb + " | " + newCount)
+            }
+
+            $(".like-btn").click(function (e) {
+                e.preventDefault()
+                var this_ = $(this)
+                var likeUrl = this_.attr("data-href")
+                var likeCount = parseInt(this_.attr("data-likes")) | 0
+                var addLike = likeCount + 1
+                var removeLike = likeCount - 1
+                if (likeUrl) {
+                    $.ajax({
+                        url: likeUrl,
+                        method: "GET",
+                        data: {},
+                        success: function (data) {
+                            console.log(data)
+                            var newLikes;
+                            if (data.liked) {
+                                updateText(this_, addLike, "LIKE")
+                            } else {
+                                if (likeCount - 1 < 0) {
+                                    updateText(this_, 0, "LIKE")
+                                } else {
+                                    updateText(this_, removeLike, "LIKE")
+                                }
+                                // remove one like
+                            }
+                        }, error: function (error) {
+                            console.log(error)
+                            console.log("error")
+                        }
+                    })
+                }
+
+            })
+        })
+
     </script>
 {% endblock %}

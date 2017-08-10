@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/account.css' %}"/>
+
+    <section id="account-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col"><h3 class="account-h2">My Account</h3></div>
+                <div class="col-sm-6 col"><h3 class="welcome-h2">Welcome {{ user.first_name }}</h3></div>
+                <div class="col-sm-12 account-tabs">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active account-tab" data-toggle="tab" href="#likes" role="tab">My
+                                Likes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link account-tab" data-toggle="tab" href="#comments" role="tab">My
+                                Comments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link account-tab" data-toggle="tab" href="#added" role="tab">My Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link account-tab" data-toggle="tab" href="#details" role="tab">Account
+                                Details</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active tab-content-div" id="likes" role="tabpanel">
+                            {% for product in liked_products %}
+                                <div class="product-like-div">
+                                    <a class="account-like-a" href="/product/{{ product.id }}"><img
+                                            src="{{ product.image.url }}"
+                                            class="img-responsive"></a>
+                                    <a href="/product/{{ product.id }}"><p class="like-product-name">{{ product.name }}</p></a>
+                                    <p class="like-product-likes">{{ product.likes.count }} likes</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="tab-pane tab-content-div" id="comments" role="tabpanel">
+                            ...
+                        </div>
+                        <div class="tab-pane tab-content-div" id="added" role="tabpanel">
+                            {% for product in added %}
+                                <div class="product-like-div">
+                                    <a class="account-like-a" href="/product/{{ product.id }}"><img
+                                            src="{{ product.image.url }}"
+                                            class="img-responsive"></a>
+                                    <a href="/product/{{ product.id }}"><p class="like-product-name">{{ product.name }}</p></a>
+                                    <p class="like-product-likes">{{ product.likes.count }} likes</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="tab-pane tab-content-div" id="details" role="tabpanel">
+                            <form class="form-account mx-auto" method="POST"
+                                  action="{% url 'register' %}">{% csrf_token %}
+                                <label for="inputEmail">Email address</label>
+                                <input type="text" id="email2" name="email" class="form-control"
+                                       placeholder="{{ user.username }}">
+                                <label for="inputPassword" class="sr-only">Password</label>
+                                <input type="password" id="password" name="password" class="form-control"
+                                       placeholder="Old Password">
+                                <label for="inputPassword" class="sr-only">Password</label>
+                                <input type="password" id="password" name="password" class="form-control"
+                                       placeholder="New Password">
+                                <label for="inputPassword" class="sr-only">Password</label>
+                                <input type="password" id="password2" name="password" class="form-control"
+                                       placeholder="New Password">
+                                <button class="btn btn-lg btn-primary btn-block" type="submit" id="registerButton">Save
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn account-lgout-button" onclick="window.location.href='/logout/'">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    </script>
+{% endblock %}

@@ -87,3 +87,17 @@ p {
     max-height: 50px;
     margin: 7px;
 }
+
+.like-button {
+    border: solid #2E9CCA 2px;
+    width: 140px;
+    height: 40px;
+    color: #2E9CCA;
+    background: white url('../img/thumbs-up.png') 12px 9px no-repeat;
+    cursor: pointer;
+}
+
+.like-button:hover{
+    border-color: #0079A1;
+    color: #0079A1;
+}

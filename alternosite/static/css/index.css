@@ -148,6 +148,17 @@
     }
 }
 
+.ui-menu .ui-menu-item a, li{
+    color: black;
+    border: 0;
+}
+
+.ui-menu .ui-menu-item a, li:hover{
+    color: black;
+    border: 0;
+    cursor: pointer;
+}
+
 #cat-button-section {
     background-color: #DFDCE3;
     padding: 0;

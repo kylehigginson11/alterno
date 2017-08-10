@@ -58,6 +58,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'alterno.urls'
 
 LOGIN_REDIRECT_URL = 'index'
+LOGIN_URL = 'login'
 
 TEMPLATES = [
     {

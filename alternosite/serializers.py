@@ -2,7 +2,9 @@ from rest_framework import serializers
 from alternosite.models import Product
 
 
-class RecentUploadSerializer(serializers.ModelSerializer):
+class ProductListSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ('name', 'id')
+

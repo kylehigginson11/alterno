@@ -1,0 +1,80 @@
+body{
+    padding-top: 140px;
+}
+
+.account-tab {
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.account-lgout-button {
+    background-color: #2E9CCA;
+    cursor: pointer;
+}
+
+.account-h2 {
+    text-align: left;
+}
+
+.welcome-h2 {
+    text-align: right;
+}
+
+.account-tabs {
+    background-color: #DFDCE3;
+    border-radius: 5px;
+    padding: 80px;
+    margin-top: 20px;
+}
+
+.account-tabs ul{
+    display: flex;
+    justify-content: center;
+}
+
+.account-tabs a.active{
+    background-color: #2E9CCA !important;
+    color: white;
+}
+
+.account-tabs a{
+    color: #2c2c2c;
+}
+
+.account-like-a img{
+    max-height: 50px;
+    float: left;
+}
+
+.account-like-a {
+    float: left;
+}
+
+.product-like-div {
+    border-bottom: solid black 1px;
+    margin-bottom: 20px;
+}
+
+.like-product-name {
+    margin-left: 100px;
+}
+
+.like-product-likes {
+    margin-left: 100px;
+}
+
+.tab-content-div{
+    height: 300px;
+}
+
+.nav-pills {
+    margin-bottom: 30px;
+}
+
+.form-account {
+    max-width: 400px;
+}
+
+.form-account input{
+    margin-bottom: 20px;
+}

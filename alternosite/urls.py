@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^logout/$', views.logoutuser, name='logout'),
     url(r'^register/$', views.registeruser, name='register'),
     url(r'^product/(?P<id>[\w-]+)/', views.detailProduct, name='product_detail'),
+    url(r'^api/product_list/', views.ProductAutocompleteList.as_view(), name='product_list_api'),
+    url(r'^account', views.account, name='account'),
 
     # API URLS
     url(r'^api/(?P<product>[\w-]+)/like/$', ProductLikeAPIToggle.as_view(), name='like-api-toggle'),
