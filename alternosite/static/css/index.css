@@ -148,15 +148,19 @@
     }
 }
 
-.ui-menu .ui-menu-item a, li{
+.ui-menu .ui-menu-item a, li {
     color: black;
     border: 0;
 }
 
-.ui-menu .ui-menu-item a, li:hover{
+.ui-menu .ui-menu-item a, li:hover {
     color: black;
     border: 0;
     cursor: pointer;
+}
+
+div.cat-button:hover > .dropdown-menu {
+    display: block;
 }
 
 #cat-button-section {
@@ -178,6 +182,21 @@
     cursor: pointer;
     background-color: transparent;
     border: none;
+}
+
+.cat-button button:hover {
+    text-decoration: underline;
+}
+
+.sub-cat {
+    font-size: 16px !important;
+    border-radius: 0!important;
+}
+
+.dropdown-menu {
+    border-radius: 0;
+    margin: 0;
+    border-top: 0;
 }
 
 .cat-button p {

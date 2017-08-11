@@ -62,10 +62,6 @@
     display: none;
 }
 
-.nav-link {
-    width: 200px !important;
-}
-
 @media (max-width: 992px) {
     .nav-search-icon {
         max-height: 30px;
@@ -79,15 +75,8 @@
 }
 
 @media (min-width: 992px) {
-    .nav-link {
-        background-color: #2E9CCA;
-        border-radius: 0.5rem;
-        width: 60px;
-        text-align: center;
-    }
 
     .nav-cat-link {
-        display: none;
     }
 }
 
@@ -97,4 +86,21 @@
         display: none;
     }
 
+}
+
+.account-li {
+    background-color: #2E9CCA;
+}
+
+.account-li a {
+    color: white !important;
+    font-weight: lighter;
+}
+
+.account-li:hover {
+    border-bottom: solid white 2px!important;
+}
+
+.nav-link:hover {
+    border-bottom: solid #2E9CCA 2px;
 }

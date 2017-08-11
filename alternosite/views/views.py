@@ -18,9 +18,19 @@ from alternosite.serializers import ProductListSerializer
 
 def index(request):
     products = Product.objects.filter(approved=True, removed=False).order_by("-id")[:4]
-    software = Category.objects.get(name='Software')
-    software_subs = SubCategory.objects.filter(category=software)
-    return render(request, 'index.html', {'products': products, 'software_subs': software_subs})
+    categories = Category.objects.all()
+    sub_categories = SubCategory.objects.all()
+    context = list()
+    for cat in categories:
+        dict_ = dict()
+        subs = sub_categories.filter(category__name=cat.name)
+        list_ = list()
+        for sub in subs:
+            list_.append(sub.name)
+        dict_['name'] = cat.name
+        dict_['subs'] = list_
+        context.append(dict_)
+    return render(request, 'index.html', {'products': products, 'categories': context})
 
 
 def loginuser(request):
@@ -50,13 +60,13 @@ def registeruser(request):
             context = {
                 "error": "This username already exists",
             }
-            return render(request, 'register.html', context)
+            return render(request, 'registration/login.html', context)
         else:
             user = User.objects.create_user(username=username, password=password)
             login(request, user)
             return redirect('index')
     else:
-        return render(request, 'register.html')
+        return render(request, 'registration/login.html')
 
 
 def detailProduct(request, **kwargs):

@@ -5,21 +5,86 @@
 
     <section id="signin-section">
         <div class="container">
+            <div class="row">
 
-            <form class="form-signin" method="POST" action="{% url 'login' %}">{% csrf_token %}
-                <h2 class="form-signin-heading">Please sign in</h2>
-                <label for="inputEmail" class="sr-only">Email address</label>
-                <input type="text" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
-                <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Remember me
-                    </label>
+                <div class="col-md-6">
+                    <form class="form-signin" method="POST" action="{% url 'login' %}">{% csrf_token %}
+                        <h2 class="form-signin-heading">Please sign in</h2>
+                        <label for="inputEmail" class="sr-only">Email address</label>
+                        <input type="text" id="email" name="email" class="form-control" placeholder="Email address"
+                               required
+                               autofocus>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                               required>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="remember-me"> Remember me
+                            </label>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                    </form>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            </form>
 
+                <div class="col-md-6">
+                    <form class="form-signin" method="POST" action="{% url 'register' %}">{% csrf_token %}
+                        <h2 class="form-signin-heading">Register</h2>
+                        <label for="inputEmail" class="sr-only">Email address</label>
+                        <input type="text" id="email" name="email" class="form-control" placeholder="Email address"
+                               required
+                               autofocus>
+                        <label for="inputEmail" class="sr-only">Email address</label>
+                        <input type="text" id="email2" name="email" class="form-control" placeholder="Email address"
+                               required
+                               autofocus>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                               required>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" id="password2" name="password" class="form-control"
+                               placeholder="Password"
+                               required>
+                        <p id="errorP" class="error-p">{{ error }}</p>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="remember-me"> Send me updates on alternatives
+                            </label>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" id="registerButton">Register
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </section>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#password2').focusout(function () {
+                var pass = $('#password2').val();
+                var pass2 = $('#password').val();
+                if (pass != pass2) {
+                    $('#errorP').text("Passwords do not match!");
+                    $('#registerButton').addClass("disabled");
+                } else {
+                    $('#registerButton').removeClass("disabled");
+                }
+
+            });
+
+            $('#email2').focusout(function () {
+                var email = $('#email').val();
+                var email2 = $('#email2').val();
+                if (email != email2) {
+                    $('#errorP').text("Email addresses do not match!");
+                    $('#registerButton').addClass("disabled");
+                } else {
+                    $('#registerButton').removeClass("disabled");
+                }
+
+            });
+        });
+
+    </script>
 {% endblock %}

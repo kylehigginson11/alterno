@@ -36,34 +36,21 @@
     <section id="cat-button-section">
         <div class="container">
             <div class="row">
-                <div class="col-sm-2 cat-button black-font">
-                    <div class="dropdown cat-button black-font">
-                        <button class="btn" type="button" id="dropdownMenu2"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Software
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            {% for cat in software_subs %}
-                                <button class="dropdown-item" type="button">{{ cat.name }}</button>
-                            {% endfor %}
+                {% for cat in categories %}
+                    <div class="col-sm-2 cat-button black-font">
+                        <div class="dropdown cat-button black-font">
+                            <button class="btn" type="button" id="dropdownMenu2"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ cat.name }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                {% for sub in cat.subs %}
+                                    <button class="dropdown-item sub-cat" type="button">{{ sub }}</button>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-2 cat-button black-font">
-                    <button>Technology</button>
-                </div>
-                <div class="col-sm-2 cat-button black-font">
-                    <button>Food</button>
-                </div>
-                <div class="col-sm-2 cat-button black-font">
-                    <button>Home</button>
-                </div>
-                <div class="col-sm-2 cat-button black-font">
-                    <button>Websites</button>
-                </div>
-                <div class="col-sm-2 cat-button black-font">
-                    <button>Other</button>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

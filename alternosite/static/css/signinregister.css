@@ -2,6 +2,11 @@
     padding-top: 100px;
 }
 
+#signin-section input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .form-signin {
     max-width: 330px;
     padding: 15px;
