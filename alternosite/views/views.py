@@ -72,7 +72,7 @@ def registeruser(request):
 def detailProduct(request, **kwargs):
     product_id = kwargs['id']
     product = Product.objects.get(id=product_id)
-    product_line = Product.objects.filter(product_line=product.product_line).exclude(id=product.id)
+    product_line = Product.objects.filter(product_line=product.product_line, approved=True).exclude(id=product.id)
     product_line = product_line.annotate(consumption_times=Count('likes')) \
         .order_by('-consumption_times')
     return render(request, 'productdetail.html', {'main_product': product, 'product_line': product_line})
