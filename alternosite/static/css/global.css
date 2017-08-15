@@ -29,6 +29,10 @@ p {
 
 }
 
+button {
+    cursor: pointer;
+}
+
 .btn-outline-info {
     border-color: #2E9CCA;
     color: #2E9CCA;

@@ -1,4 +1,4 @@
-body{
+body {
     padding-top: 140px;
 }
 
@@ -27,21 +27,21 @@ body{
     margin-top: 20px;
 }
 
-.account-tabs ul{
+.account-tabs ul {
     display: flex;
     justify-content: center;
 }
 
-.account-tabs a.active{
+.account-tabs a.active {
     background-color: #2E9CCA !important;
     color: white;
 }
 
-.account-tabs a{
+.account-tabs a {
     color: #2c2c2c;
 }
 
-.account-like-a img{
+.account-like-a img {
     max-height: 50px;
     float: left;
 }
@@ -63,7 +63,7 @@ body{
     margin-left: 100px;
 }
 
-.tab-content-div{
+.tab-content-div {
     height: 300px;
 }
 
@@ -75,6 +75,6 @@ body{
     max-width: 400px;
 }
 
-.form-account input{
+.form-account input {
     margin-bottom: 20px;
 }

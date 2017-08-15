@@ -16,16 +16,19 @@
                     <p class="more">{{ main_product.description }}</p>
                 </div>
                 <div class="row main-product-details">
-                    <div class="col-md-4 col">
-                        <p>£{{ main_product.price }}</p>
+                    <div class="col-md-3 col">
+                        <button type="button" class="btn add-button">Add Alternative</button>
                     </div>
-                    <div class="col-md-4 col">
-                        <button type="button" class="like-button like-btn"
+                    <div class="col-md-3 col">
+                        <button type="button" class="btn btn-price">£{{ main_product.price }}</button>
+                    </div>
+                    <div class="col-md-3 col">
+                        <button type="button" class="like-button"
                                 data-href='{{ main_product.get_api_like_url }}'
                                 data-likes='{{ main_product.likes.count }}' href='{{ main_product.get_like_url }}'>LIKE
                             | {{ main_product.likes.count }}</button>
                     </div>
-                    <div class="col-md-4 col">
+                    <div class="col-md-3 col">
                         <button type="button" class="btn btn-success" value="more-info"
                                 onclick="window.open('{{ main_product.web_link }}')">More Info
                         </button>
@@ -70,6 +73,31 @@
         </div>
     </section>
 
+    <section>
+
+        <div class="container">
+            <div class="row">
+
+                <form class="add-alt-form" method="POST" action="{% url 'login' %}" id="altForm">{% csrf_token %}
+                    <h2>Add Alternative</h2>
+                    <input type="text" id="altName" name="name" class="form-control" placeholder="Name"
+                           required>
+                    <textarea class="span6" rows="5" placeholder="Description .." style="width: 100%"
+                              name="description"></textarea>
+                    <input type="number" id="altPrice" name="price" class="form-control" placeholder="Price">
+                    <label for="Altimage" class="">Image:</label>
+                    <input id="Altimage" type="file" class="" name="image">
+                    <input name="productID" type="number" style="display: none" id="productID" placeholder="ID"
+                           value="{{ main_product.id }}">
+                    <button class="btn btn-join add-alt-button" type="button">Add Alternative</button>
+                </form>
+                <p style="color: green; display: none" id="successP">Product Added!</p>
+                <p style="color: red; display: none" id="errorP">Error Adding Product</p>
+
+            </div>
+        </div>
+    </section>
+
     <script>
 
         $(document).ready(function () {
@@ -109,22 +137,22 @@
         $(document).ready(function () {
             function updateText(btn, newCount, verb) {
                 btn.text(verb + " | " + newCount)
+                btn.attr('data-likes', newCount);
             }
 
-            $(".like-btn").click(function (e) {
-                e.preventDefault()
-                var this_ = $(this)
-                var likeUrl = this_.attr("data-href")
-                var likeCount = parseInt(this_.attr("data-likes")) | 0
-                var addLike = likeCount + 1
-                var removeLike = likeCount - 1
+            $(".like-button").click(function (e) {
+                e.preventDefault();
+                var this_ = $(this);
+                var likeUrl = this_.attr("data-href");
+                var likeCount = parseInt(this_.attr("data-likes")) | 0;
+                var addLike = likeCount + 1;
+                var removeLike = likeCount - 1;
                 if (likeUrl) {
                     $.ajax({
                         url: likeUrl,
                         method: "GET",
                         data: {},
                         success: function (data) {
-                            console.log(data)
                             var newLikes;
                             if (data.liked) {
                                 updateText(this_, addLike, "LIKE")
@@ -137,13 +165,33 @@
                                 // remove one like
                             }
                         }, error: function (error) {
-                            console.log(error)
+                            console.log(error);
                             console.log("error")
                         }
                     })
                 }
 
             })
+        });
+
+        $(".add-alt-button").click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/api/add_alternative/',
+                type: 'post',
+                dataType: 'json',
+                data: $('#altForm').serialize(),
+                enctype : "multipart/form-data",
+                success: function (data) {
+                    if (data.added) {
+                        document.getElementById('erroorP').style.display = 'none';
+                        document.getElementById('successP').style.display = 'block';
+                    } else {
+                        document.getElementById('successP').style.display = 'none';
+                        document.getElementById('errorP').style.display = 'block';
+                    }
+                }
+            });
         })
 
     </script>

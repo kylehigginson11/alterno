@@ -89,6 +89,38 @@ def account(request, **kwargs):
     return render(request, 'account.html', context)
 
 
+def category(request, **kwargs):
+    categories = Category.objects.all()
+    sub_categories = SubCategory.objects.all()
+    context = list()
+    for cat in categories:
+        dict_ = dict()
+        subs = sub_categories.filter(category__name=cat.name)
+        list_ = list()
+        for sub in subs:
+            list_.append(sub.name)
+        dict_['name'] = cat.name
+        dict_['subs'] = list_
+        context.append(dict_)
+    return render(request, 'categories.html', {'categories': context})
+
+
+class AddAlternative(APIView):
+    def post(self, request):
+        name = request.POST.get('name', None)
+        description = request.POST.get('description', None)
+        image = request.POST.get('image', None)
+        price = request.POST.get('price', None)
+        product_id = request.POST.get('productID', None)
+
+        product_line = Product.objects.get(id=product_id).product_line
+
+        Product.objects.create(name=name, description=description, image=request.FILES['image'], price=price,
+                               product_line=product_line).save()
+
+        return Response({'added': True})
+
+
 class ProductLikeAPIToggle(APIView):
     authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)

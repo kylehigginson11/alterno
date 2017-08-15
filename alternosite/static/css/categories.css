@@ -1,0 +1,22 @@
+#category_section {
+    margin-top: 60px;
+}
+
+.account-tabs {
+    border-radius: 5px;
+    margin: 20px 0 20px 0;
+}
+
+.account-tabs ul {
+    display: flex;
+    justify-content: center;
+}
+
+.account-tabs a.active {
+    background-color: #2E9CCA !important;
+    color: white;
+}
+
+.account-tabs a {
+    color: #2c2c2c;
+}

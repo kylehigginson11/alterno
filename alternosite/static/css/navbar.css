@@ -3,15 +3,6 @@
     border-bottom: solid #2E9CCA 2px;
 }
 
-.nav-search-form {
-    opacity: 0;
-}
-
-.nav-search-form.search-scrolled {
-    opacity: 100;
-    margin-right: 22% !important;
-}
-
 .btn-join {
     background-color: #2E9CCA;
     padding-left: 30px;
@@ -88,19 +79,24 @@
 
 }
 
-.account-li {
-    background-color: #2E9CCA;
-}
+@media (min-width: 992px) {
 
-.account-li a {
-    color: white !important;
-    font-weight: lighter;
-}
+    .account-li {
+        background-color: #2E9CCA;
+        margin-left: 20px;
+    }
 
-.account-li:hover {
-    border-bottom: solid white 2px!important;
-}
+    .account-li a {
+        color: white !important;
+        font-weight: lighter;
+    }
 
-.nav-link:hover {
-    border-bottom: solid #2E9CCA 2px;
+    .account-li:hover {
+        border-bottom: solid white 2px !important;
+    }
+
+    #topNav .nav-link:hover {
+        border-bottom: solid #2E9CCA 2px;
+    }
+
 }

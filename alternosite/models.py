@@ -48,8 +48,8 @@ class Product(models.Model):
     web_link = models.CharField(max_length=200, blank=True, null=True)
     create_date = models.DateField(auto_now=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='post_likes')
-    height_field = models.IntegerField(default=0)
-    width_field = models.IntegerField(default=0)
+    height_field = models.IntegerField(default=20)
+    width_field = models.IntegerField(default=20)
     image = models.ImageField(upload_to='images/',
                               null=True,
                               blank=True,
