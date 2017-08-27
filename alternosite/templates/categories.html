@@ -17,7 +17,7 @@
                     </ul>
                 </div>
 
-                <div class="tab-content" style="width: 100%">
+                <div class="tab-content sub-cat-div" style="width: 100%">
                     {% for category in categories %}
                         {% if category.name == 'Software' %}
                             <div class="tab-pane tab-content-div active" id="{{ category.name }}" role="tabpanel">
@@ -25,9 +25,9 @@
                             <div class="tab-pane tab-content-div" id="{{ category.name }}" role="tabpanel">
                         {% endif %}
                     <div class="row">
-                        {% for sub in category.subs %}
-                            <div class="col-sm-2">
-                                {{ sub }}
+                        {% for key, value in category.subs.items %}
+                            <div class="col-sm-2 sub-link" onclick="getList('{{ key }}')">
+                                {{ value }}
                             </div>
                         {% endfor %}
                     </div>
@@ -35,10 +35,28 @@
                     {% endfor %}
                     </div>
                 </div>
-            </div>
+
+                <div id="recentHeadingDiv" style="display: none">
+                    <h4 class="text-center">Recent Product Lines</h4>
+                </div>
+
+                <div class="item-list row" id="subCatItems">
+
+                </div>
+
     </section>
 
     <script>
+
+        function getList(y) {
+            $.getJSON('/api/pop_list/' + y, function (data) {
+                $('#subCatItems').empty();
+                $('#recentHeadingDiv').show();
+                $.each(data, function (i, item) {
+                    $('#subCatItems').append('<div class="col-md-4"><h4>' + item.name + '</div>');
+                });
+            });
+        }
 
         // Javascript to enable link to tab
         var url = document.location.toString();

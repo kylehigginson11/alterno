@@ -2,6 +2,26 @@ p {
     font-size: 16px;
 }
 
+#addAlternative input{
+    border-color: #2c2c2c;
+    width: 300px;
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+#addAlternative textarea{
+    border-color: #2c2c2c;
+    width: 300px;
+    display: block;
+    margin: auto;
+}
+
+#addAlternative h4{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 #alternatives-section.container {
     padding-right: 140px;
     padding-left: 140px;
@@ -93,16 +113,7 @@ a.morelink {
 }
 
 .add-alt-form {
-    max-width: 300px;
-    margin: auto;
-}
-
-.add-alt-form input {
-    margin-bottom: 15px;
-}
-
-.add-alt-form textarea {
-    margin-bottom: 15px;
+    width: 100%;
 }
 
 .add-alt-form h2 {

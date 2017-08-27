@@ -73,22 +73,28 @@
         </div>
     </section>
 
-    <section>
+    <section id="addAlternative">
 
         <div class="container">
             <div class="row">
 
                 <form class="add-alt-form" id="altForm" enctype="multipart/form-data">{% csrf_token %}
                     <h2>Add Alternative</h2>
-                    <input type="text" id="altName" name="name" class="form-control" placeholder="Name"
-                           required>
-                    <textarea class="span6" rows="5" placeholder="Description .." style="width: 100%"
-                              name="description"></textarea>
-                    <input type="number" id="altPrice" name="price" class="form-control" placeholder="Price">
-                    <label for="Altimage" class="">Image:</label>
-                    <input id="Altimage" type="file" class="" name="image">
-                    <input name="productID" type="number" style="display: none" id="productID" placeholder="ID"
-                           value="{{ main_product.id }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" id="altName" name="name" class="form-control" placeholder="Name"
+                                   required>
+                            <textarea class="span6" rows="5" placeholder="Description .."
+                                      name="description"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="number" id="altPrice" name="price" class="form-control" placeholder="Price">
+                            <h4 class="">Upload an Icon</h4>
+                            <input id="Altimage" type="file" class="" name="image">
+                            <input name="productID" type="number" style="display: none" id="productID" placeholder="ID"
+                                   value="{{ main_product.id }}">
+                        </div>
+                    </div>
                     <button class="btn btn-join add-alt-button" type="submit">Add Alternative</button>
                 </form>
                 <p style="color: green; display: none" id="successP">Product Added!</p>

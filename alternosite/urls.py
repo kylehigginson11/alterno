@@ -20,6 +20,7 @@ urlpatterns = [
     # API URLS
     url(r'^api/(?P<product>[\w-]+)/like/$', ProductLikeAPIToggle.as_view(), name='like-api-toggle'),
     url(r'^api/add_alternative/$', AddAlternative.as_view(), name='add-alt-api'),
+    url(r'^api/pop_list/(?P<sub_id>[\w-]+)/$', views.PopularItemsList.as_view(), name='pop-list-api'),
 ]
 
 # media urls

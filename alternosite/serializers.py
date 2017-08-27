@@ -8,3 +8,9 @@ class ProductListSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('name', 'id')
 
+
+class PopularItemsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = ('name', )

@@ -10,6 +10,28 @@ body {
 .account-lgout-button {
     background-color: #2E9CCA;
     cursor: pointer;
+    margin-top: -70px;
+    float: right;
+}
+
+@media (max-width: 992px) {
+    #details input{
+        width: 80%;
+    }
+}
+
+#details input{
+    margin: 0 0 10px 0;
+    width: 400px;
+}
+
+.form-account {
+    display: inline-block;
+    margin: auto;
+}
+
+.account-div{
+    max-width: 400px;
 }
 
 .account-h2 {
@@ -69,12 +91,4 @@ body {
 
 .nav-pills {
     margin-bottom: 30px;
-}
-
-.form-account {
-    max-width: 400px;
-}
-
-.form-account input {
-    margin-bottom: 20px;
 }

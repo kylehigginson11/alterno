@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import Q, Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -12,8 +13,8 @@ from rest_framework.views import APIView
 from rest_framework import authentication, permissions
 
 # alternosite imports
-from alternosite.models import Product, SubCategory, Category
-from alternosite.serializers import ProductListSerializer
+from alternosite.models import Product, SubCategory, Category, ProductLine
+from alternosite.serializers import ProductListSerializer, PopularItemsSerializer
 
 
 def index(request):
@@ -83,9 +84,11 @@ def account(request, **kwargs):
     user = request.user
     product_likes = Product.objects.filter(likes=user)
     added = Product.objects.filter(user=user)
+    form = PasswordChangeForm(request.user)
     context = {'user': user,
                'liked_products': product_likes,
-               'added': added}
+               'added': added,
+               'form': form}
     return render(request, 'account.html', context)
 
 
@@ -97,11 +100,14 @@ def category(request, **kwargs):
         dict_ = dict()
         subs = sub_categories.filter(category__name=cat.name)
         list_ = list()
+        sub_dict = dict()
         for sub in subs:
             list_.append(sub.name)
+            sub_dict[sub.id] = sub.name
         dict_['name'] = cat.name
-        dict_['subs'] = list_
+        dict_['subs'] = sub_dict
         context.append(dict_)
+    print(context)
     return render(request, 'categories.html', {'categories': context})
 
 
@@ -171,7 +177,6 @@ class ProductAutocompleteList(APIView):
     """
     List of products that contain the 'term' passed in as a GET.
     """
-
     def get(self, request, **kwargs):
         q = request.GET.get('term', '')
         products = Product.objects.filter(Q(name__icontains=q))
@@ -179,3 +184,19 @@ class ProductAutocompleteList(APIView):
         serializer = ProductListSerializer(products, many=True)
 
         return Response(serializer.data)
+
+
+class PopularItemsList(APIView):
+
+    def get(self, request, **kwargs):
+        sub_cat = SubCategory.objects.get(id=kwargs['sub_id'])
+        qry_set = ProductLine.objects.filter(sub_category=sub_cat)[:5]
+
+        serializer = PopularItemsSerializer(qry_set, many=True)
+
+        return Response(serializer.data)
+
+
+def product_line(request, **kwargs):
+    product_line = ProductLine.objects.get(kwargs['product_line'])
+    return render(request, 'productdetail.html', {'main_product': product, 'product_line': product_line})

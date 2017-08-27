@@ -5,6 +5,9 @@
 
     <section id="account-section">
         <div class="container">
+            <button type="button" class="btn account-lgout-button" onclick="window.location.href='/logout/'">
+                Logout
+            </button>
             <div class="row">
                 <div class="col-sm-6 col"><h3 class="account-h2">My Account</h3></div>
                 <div class="col-sm-6 col"><h3 class="welcome-h2">Welcome {{ user.first_name }}</h3></div>
@@ -57,33 +60,53 @@
                             {% endfor %}
                         </div>
                         <div class="tab-pane tab-content-div" id="details" role="tabpanel">
-                            <form class="form-account mx-auto" method="POST"
+                            <form class="" method="POST"
                                   action="{% url 'register' %}">{% csrf_token %}
-                                <label for="inputEmail">Email address</label>
-                                <input type="text" id="email2" name="email" class="form-control"
-                                       placeholder="{{ user.username }}">
-                                <label for="inputPassword" class="sr-only">Password</label>
-                                <input type="password" id="password" name="password" class="form-control"
-                                       placeholder="Old Password">
-                                <label for="inputPassword" class="sr-only">Password</label>
-                                <input type="password" id="password" name="password" class="form-control"
-                                       placeholder="New Password">
-                                <label for="inputPassword" class="sr-only">Password</label>
-                                <input type="password" id="password2" name="password" class="form-control"
-                                       placeholder="New Password">
-                                <button class="btn btn-lg btn-primary btn-block" type="submit" id="registerButton">Save
-                                </button>
+                                <div class="account-div mx-auto">
+                                    <label for="inputEmail">Change Email address</label>
+                                    <input type="text" id="email2" name="email" class="form-control"
+                                           placeholder="{{ user.username }}">
+                                    <label for="inputPassword">Change Password</label>
+                                    <input type="password" id="password" name="password" class="form-control"
+                                           placeholder="Old Password">
+                                    <label for="inputPassword" class="sr-only">Password</label>
+                                    <input type="password" id="password" name="password" class="form-control"
+                                           placeholder="New Password">
+                                    <label for="inputPassword" class="sr-only">Password</label>
+                                    <input type="password" id="password2" name="password" class="form-control"
+                                           placeholder="New Password">
+                                    <button class="btn btn-lg btn-primary" type="submit" id="registerButton">
+                                        Save
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn account-lgout-button" onclick="window.location.href='/logout/'">
-                    Logout
-                </button>
             </div>
         </div>
     </section>
 
     <script>
+
+        // Javascript to enable link to tab
+        var url = document.location.toString();
+        if (url.match('#')) {
+            $('.nav-pills a[href="#' + url.split('#')[1] + '"]').tab('show');
+        }
+
+        // With HTML5 history API, we can easily prevent scrolling!
+        $('.nav-pills a').on('shown.bs.tab', function (e) {
+            if (history.pushState) {
+                history.pushState(null, null, e.target.hash);
+            } else {
+                window.location.hash = e.target.hash; //Polyfill for old browsers
+            }
+        })
+
+        $(document).ready(function () {
+            $(this).scrollTop(0);
+        });
+
     </script>
 {% endblock %}
