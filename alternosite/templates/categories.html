@@ -53,9 +53,14 @@
                 $('#subCatItems').empty();
                 $('#recentHeadingDiv').show();
                 $.each(data, function (i, item) {
-                    $('#subCatItems').append('<div class="col-md-4"><h4>' + item.name + '</div>');
+                    $('#subCatItems').append('<div class="col-md-4 recent-item" onclick="goToProductPage('{{' + item.id + '}}')"><h4>' + item.name + '</div>');
                 });
             });
+        }
+
+
+        function goToProductPage(id) {
+            window.location = '/product_line/' + id;
         }
 
         // Javascript to enable link to tab

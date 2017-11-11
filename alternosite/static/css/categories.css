@@ -43,3 +43,7 @@
     padding: 20px 0 20px 0;
     color: #2E9CCA;
 }
+
+.recent-item {
+    cursor: pointer;
+}

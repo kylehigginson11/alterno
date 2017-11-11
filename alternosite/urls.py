@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^api/product_list/', views.ProductAutocompleteList.as_view(), name='product_list_api'),
     url(r'^account', views.account, name='account'),
     url(r'^category/', views.category, name='category'),
+    url(r'^product_line/(?P<id>[\w-]+)/', views.product_line, name='product_line'),
+    url(r'^change_details', views.change_details, name='change_details'),
 
     # API URLS
     url(r'^api/(?P<product>[\w-]+)/like/$', ProductLikeAPIToggle.as_view(), name='like-api-toggle'),

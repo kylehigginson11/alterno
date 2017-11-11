@@ -13,4 +13,4 @@ class PopularItemsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('name', )
+        fields = ('id', 'name')

@@ -46,7 +46,8 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 {% for sub in cat.subs %}
-                                    <button class="dropdown-item sub-cat" type="button">{{ sub }}</button>
+                                    <button class="dropdown-item sub-cat" type="button"
+                                            onclick="window.location.href='/category/#{{ cat.name }}'">{{ sub }}</button>
                                 {% endfor %}
                             </div>
                         </div>

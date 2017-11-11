@@ -61,16 +61,16 @@
                         </div>
                         <div class="tab-pane tab-content-div" id="details" role="tabpanel">
                             <form class="" method="POST"
-                                  action="{% url 'register' %}">{% csrf_token %}
+                                  action="{% url 'change_details' %}">{% csrf_token %}
                                 <div class="account-div mx-auto">
                                     <label for="inputEmail">Change Email address</label>
                                     <input type="text" id="email2" name="email" class="form-control"
                                            placeholder="{{ user.username }}">
                                     <label for="inputPassword">Change Password</label>
-                                    <input type="password" id="password" name="password" class="form-control"
+                                    <input type="password" id="password" name="old_password" class="form-control"
                                            placeholder="Old Password">
                                     <label for="inputPassword" class="sr-only">Password</label>
-                                    <input type="password" id="password" name="password" class="form-control"
+                                    <input type="password" id="password" name="new_password" class="form-control"
                                            placeholder="New Password">
                                     <label for="inputPassword" class="sr-only">Password</label>
                                     <input type="password" id="password2" name="password" class="form-control"

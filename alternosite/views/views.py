@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Max
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -198,5 +198,22 @@ class PopularItemsList(APIView):
 
 
 def product_line(request, **kwargs):
-    product_line = ProductLine.objects.get(kwargs['product_line'])
-    return render(request, 'productdetail.html', {'main_product': product, 'product_line': product_line})
+    product_line = ProductLine.objects.get(id=kwargs['id'])
+    products = Product.objects.filter(product_line=product_line)
+    liked_product = products.order_by('-likes')[0]
+    return redirect('/product/' + str(liked_product.id))
+
+
+@login_required()
+def change_details(request, **kwargs):
+    user = request.user
+    email = request.POST.get('email', None)
+    old_password = request.POST.get('old_password', None)
+    new_password = request.POST.get('new_password', None)
+    if email:
+        user.username = email
+    if new_password:
+        if old_password == user.password:
+            user.password = new_password
+    user.save()
+    return redirect('account')

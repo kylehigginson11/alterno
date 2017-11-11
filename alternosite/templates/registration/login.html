@@ -33,10 +33,6 @@
                         <input type="text" id="email" name="email" class="form-control" placeholder="Email address"
                                required
                                autofocus>
-                        <label for="inputEmail" class="sr-only">Email address</label>
-                        <input type="text" id="email2" name="email" class="form-control" placeholder="Email address"
-                               required
-                               autofocus>
                         <label for="inputPassword" class="sr-only">Password</label>
                         <input type="password" id="password" name="password" class="form-control" placeholder="Password"
                                required>
@@ -66,18 +62,6 @@
                 var pass2 = $('#password').val();
                 if (pass != pass2) {
                     $('#errorP').text("Passwords do not match!");
-                    $('#registerButton').addClass("disabled");
-                } else {
-                    $('#registerButton').removeClass("disabled");
-                }
-
-            });
-
-            $('#email2').focusout(function () {
-                var email = $('#email').val();
-                var email2 = $('#email2').val();
-                if (email != email2) {
-                    $('#errorP').text("Email addresses do not match!");
                     $('#registerButton').addClass("disabled");
                 } else {
                     $('#registerButton').removeClass("disabled");
